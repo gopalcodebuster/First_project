@@ -1,0 +1,1451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SkyLink eVTOL | Next-Gen Flight Experience</title>
+  
+  <!-- Google Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary-blue: #2765f5;
+      --accent: #00d4ff;
+      --light-text: #f0f0f0;
+      --dark-bg: #0a0f1b;
+      --card-bg: rgba(255, 255, 255, 0.05);
+      --transition: all 0.3s ease;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      background-color: #000000;
+      color: var(--light-text);
+      font-family: 'Montserrat', Montserrat;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    /* Header Styles */
+    header {
+      position: fixed;
+      width: 100%;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      background: rgba(0, 0, 0, 0.95);
+      padding: 15px 0;
+      backdrop-filter: blur(10px);
+      transition: var(--transition);
+    }
+    
+    header.scrolled {
+      padding: 10px 0;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    }
+    
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .logo {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+    }
+    
+    .logo-icon {
+      margin-right: 5px;
+      font-size: 2rem;
+    }
+    
+    nav {
+      display: flex;
+      gap: 30px;
+    }
+    
+    nav a {
+      font-size: 1.2rem;
+      padding: 5px 0;
+      position: relative;
+      transition: var(--transition);
+    }
+    
+    nav a:hover {
+      color: var(--accent);
+    }
+    
+    nav a::after {
+      content: "";
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: var(--transition);
+    }
+    
+    nav a:hover::after {
+      width: 100%;
+    }
+    
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 3rem;
+      cursor: pointer;
+    }
+    
+    /* Hero Section */
+    .hero {
+      height: 100vh;
+      background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9)), 
+                  url('/public/hero.jpg') center/cover no-repeat;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+    
+    .hero-content {
+      position: relative;
+      max-width: 800px;
+      padding: 0 20px;
+      z-index: 10;
+    }
+    
+    .hero-content h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 3.5rem;
+      margin-bottom: 20px;
+      color: var(--light-text);
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+      line-height: 1.2;
+    }
+    
+    .hero-content h1 span {
+      color: var(--accent);
+    }
+    
+    .hero-content p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+      color: #e0e0e0;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .hero-btns {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    
+    .btn {
+      background: var(--primary-blue);
+      color: #fff;
+      padding: 14px 36px;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: var(--transition);
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    
+    .btn:hover {
+      background: #1a56e0;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(39, 101, 245, 0.3);
+    }
+    
+    .btn-outline {
+      background: transparent;
+      border: 2px solid var(--accent);
+      color: var(--accent);
+    }
+    
+    .btn-outline:hover {
+      background: var(--accent);
+      color: var(--dark-bg);
+    }
+    
+    /* Section Styles */
+    section {
+      padding: 100px 0;
+    }
+    
+    .section-title {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+    
+    .section-title h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2.5rem;
+      color: var(--light-text);
+      margin-bottom: 15px;
+    }
+    
+    .section-title p {
+      color: #aaa;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    /* Features Section */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 30px;
+    }
+    
+    .feature-card {
+      background: black;
+      border-radius: 12px;
+      padding: 40px 30px;
+      transition: var(--transition);
+      text-align: center;
+      border: 1px solid white;
+    }
+    
+    .feature-card:hover {
+      transform: translateY(-10px);
+      background: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    }
+    
+    .feature-card .icon {
+      font-size: 48px;
+      color: var(--accent);
+      margin-bottom: 20px;
+      display: inline-flex;
+      width: 80px;
+      height: 80px;
+      background: white;
+      border-radius: 50%;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .feature-card h3 {
+      margin-bottom: 15px;
+      font-size: 1.4rem;
+      color: var(--light-text);
+    }
+    
+    .feature-card p {
+      color: #d0d0d0;
+    }
+    
+    /* Infotainment Section */
+    .infotainment {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 60px;
+    }
+    
+    .infotainment-img {
+      flex: 1;
+      min-width: 300px;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+    
+    .infotainment-img img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: var(--transition);
+    }
+    
+    .infotainment-img:hover img {
+      transform: scale(1.05);
+    }
+    
+    .infotainment-text {
+      flex: 1;
+      min-width: 300px;
+    }
+    
+    .infotainment-text h2 {
+      font-size: 2.2rem;
+      margin-bottom: 20px;
+      color: var(--light-text);
+    }
+    
+    .infotainment-text p {
+      margin-bottom: 20px;
+      color: #cccccc;
+    }
+    
+    .infotainment-features {
+      margin-top: 30px;
+    }
+    
+    .infotainment-feature {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    
+    .infotainment-feature .icon {
+      color: var(--accent);
+      margin-right: 15px;
+      font-size: 1.2rem;
+    }
+    
+    /* Fleet Section */
+    .fleet {
+      background: rgba(0, 0, 0, 0.2);
+    }
+    
+    .fleet-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 50px;
+    }
+    
+    .fleet-card {
+      background: rgb(0, 0, 0);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: var(--transition);
+      border: 1px solid white;
+    }
+    
+    .fleet-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    }
+    
+    .fleet-card-img {
+      height: 200px;
+      overflow: hidden;
+    }
+    
+    .fleet-card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: var(--transition);
+    }
+    
+    .fleet-card:hover .fleet-card-img img {
+      transform: scale(1.1);
+    }
+    
+    .fleet-card-content {
+      padding: 25px;
+    }
+    
+    .fleet-card-content h3 {
+      margin-bottom: 10px;
+      font-size: 1.4rem;
+      color: var(--light-text);
+    }
+    
+    .fleet-card-content p {
+      color: #d0d0d0;
+      margin-bottom: 20px;
+    }
+    
+    .fleet-specs {
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 15px;
+    }
+    
+    .spec {
+      text-align: center;
+    }
+    
+    .spec-value {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    
+    .spec-label {
+      font-size: 0.8rem;
+      color: #aaa;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    /* Contact Section */
+    .contact {
+      text-align: center;
+    }
+    
+    .contact p {
+      max-width: 600px;
+      margin: 0 auto 40px;
+      color: #aaa;
+    }
+    
+    .btn-cta {
+      background: var(--accent);
+      color: var(--dark-bg);
+      padding: 16px 48px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: var(--transition);
+      font-weight: 700;
+    }
+    
+    .btn-cta:hover {
+      background: #00c4e0;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0, 212, 255, 0.3);
+    }
+    
+    /* Footer */
+    footer {
+      background: #000000;
+      color: #ffffff;
+      padding: 80px 0 30px;
+    }
+    
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+    
+    .footer-col h4 {
+      color: var(--accent);
+      margin-bottom: 20px;
+      font-size: 1.2rem;
+    }
+    
+    .footer-col a {
+      color: #ffffff;
+      display: block;
+      margin-bottom: 10px;
+      transition: var(--transition);
+    }
+    
+    .footer-col a:hover {
+      color: var(--accent);
+      padding-left: 5px;
+    }
+    
+    .footer-bottom {
+      text-align: center;
+      padding-top: 30px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 0.9rem;
+      color: #ffffff;
+    }
+
+  
+    
+    
+    /* Fleet Navigation */
+    .fleet-nav {
+     background: url("/public/flight.gif") no-repeat center center fixed;
+     background-size: cover; 
+      padding: 300px 0;
+      position: sticky;
+      margin-top: 10%;
+      z-index: 100;
+     
+    }
+    
+    .fleet-nav-list {
+      display: flex;
+      justify-content: center;
+      gap: 50px;
+      flex-wrap: wrap;
+    }
+    
+    .fleet-nav-item {
+      padding: 10px 20px;
+      border-radius: 30px;
+      background: transparent;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: var(--transition);
+      font-weight: 1000;
+    }
+    
+    .fleet-nav-item.active {
+      background: var(--accent);
+      color: var(--dark-bg);
+    }
+    
+    .fleet-nav-item:hover:not(.active) {
+      border-color: var(--accent);
+    }
+    
+    /* Fleet Details Section */
+    .fleet-details {
+      padding: 80px 0;
+    }
+    
+    .fleet-model {
+      display: none;
+    }
+    
+    .fleet-model.active {
+      display: block;
+    }
+    
+    .model-header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+    
+    .model-header h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      color: var(--light-text);
+    }
+    
+    .model-header p {
+      color: #aaa;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .model-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+      align-items: center;
+    }
+    
+    .model-image {
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+    
+    .model-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    
+    .model-info h3 {
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+      color: var(--accent);
+    }
+    
+    .model-info p {
+      margin-bottom: 25px;
+      color: #d0d0d0;
+    }
+    
+    .model-specs {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    
+    .spec-item {
+      background: var(--card-bg);
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+    }
+    
+    .spec-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent);
+      display: block;
+    }
+    
+    .spec-label {
+      font-size: 0.9rem;
+      color: #aaa;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    .model-features {
+      margin-top: 30px;
+    }
+    
+    .model-features h4 {
+      margin-bottom: 15px;
+      color: var(--accent);
+    }
+    
+    .features-list {
+      list-style-type: none;
+    }
+    
+    .features-list li {
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .features-list li::before {
+      content: "✓";
+      color: var(--accent);
+      font-weight: bold;
+      margin-right: 10px;
+    }
+    
+    .tech-specs {
+      margin-top: 50px;
+      background: var(--card-bg);
+      border-radius: 15px;
+      padding: 30px;
+    }
+    
+    .tech-specs h3 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: var(--accent);
+    }
+    
+    .specs-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    .specs-table tr {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .specs-table td {
+      padding: 15px 10px;
+    }
+    
+    .specs-table td:first-child {
+      font-weight: 700;
+      width: 40%;
+    }
+    
+    /* Comparison Section */
+    .comparison {
+      padding: 80px 0;
+      background: rgba(0, 0, 0, 0.2);
+    }
+    
+    .comparison h2 {
+      text-align: center;
+      margin-bottom: 50px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2.5rem;
+      color: var(--light-text);
+    }
+    
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--card-bg);
+      border-radius: 15px;
+      overflow: hidden;
+    }
+    
+    .comparison-table th {
+      background: var(--primary-blue);
+      padding: 20px;
+      text-align: left;
+      font-weight: 700;
+    }
+    
+    .comparison-table td {
+      padding: 15px 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .comparison-table tr:last-child td {
+      border-bottom: none;
+    }
+    
+    .comparison-table .model-name {
+      font-weight: 700;
+      color: var(--accent);
+    }
+    
+    /* CTA Section */
+    .cta-section {
+      padding: 80px 0;
+      text-align: center;
+    }
+    
+    .cta-section h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      color: var(--light-text);
+    }
+    
+    .cta-section p {
+      max-width: 600px;
+      margin: 0 auto 30px;
+      color: #aaa;
+    }
+    
+    .btn {
+      background: var(--primary-blue);
+      color: #fff;
+      padding: 14px 36px;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: var(--transition);
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      display: inline-block;
+      margin: 0 10px;
+    }
+    
+    .btn:hover {
+      background: #1a56e0;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(39, 101, 245, 0.3);
+    }
+    
+    .btn-outline {
+      background: transparent;
+      border: 2px solid var(--accent);
+      color: var(--accent);
+    }
+    
+    .btn-outline:hover {
+      background: var(--accent);
+      color: var(--dark-bg);
+    }
+    
+    /* Responsive Styles */
+    @media (max-width: 992px) {
+      .hero-content h1 {
+        font-size: 2.8rem;
+      }
+      
+      .section-title h2 {
+        font-size: 2.2rem;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .mobile-menu-btn {
+        display: block;
+      }
+      
+      nav {
+        position: fixed;
+        top: 70px;
+        right: -100%;
+        width: 80%;
+        height: calc(100vh - 70px);
+        background: var(--dark-bg);
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        padding-top: 50px;
+        transition: var(--transition);
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+      }
+      
+      nav.active {
+        right: 0;
+      }
+      
+      nav a {
+        font-size: 1.2rem;
+        padding: 15px 0;
+      }
+      
+      .hero-content h1 {
+        font-size: 2.2rem;
+      }
+      
+      .hero-content p {
+        font-size: 1rem;
+      }
+      
+      .hero-btns {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .btn {
+        width: 100%;
+        max-width: 250px;
+      }
+      
+      .infotainment {
+        flex-direction: column;
+      }
+    }
+    
+    @media (max-width: 576px) {
+      .section-title h2 {
+        font-size: 1.8rem;
+      }
+      
+      .feature-card, .fleet-card {
+        padding: 25px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header id="header">
+    <div class="container">
+      <div class="header-content">
+        <a href="/public/hero.jpg" class="logo">
+          <span class="material-icons logo-icon">flight</span>
+          SkyLink eVTOL
+        </a>
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+          <span class="material-icons">menu</span>
+        </button>
+        <nav id="mainNav">
+          <a href="#features">Features</a>
+          <a href="#infotainment">Infotainment</a>
+          <a href="#fleet">Fleet</a>
+          <a href="#contact">Contact</a>
+          <a href="./demo.html">Demo</a>
+          <a href="./auth.html">Login</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Redefining <span>Air Mobility</span> for Tomorrow</h1>
+      <p>Experience seamless, luxurious, and efficient flight through our next‑gen eVTOL platform with integrated infotainment. Welcome to the skies of future.</p>
+      <div class="hero-btns">
+        <button class="btn" onclick="location.href='./book.html'">Book a Demo Flight</button>
+        <button class="btn btn-outline">Explore Technology</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="features">
+    <div class="container">
+      <div class="section-title">
+        <h2>Core Features</h2>
+        <p>SkyLink eVTOL combines cutting-edge technology with exceptional passenger experience</p>
+      </div>
+      <div class="features">
+        <div class="feature-card">
+          <div class="icon"><span class="material-icons">flight_takeoff</span></div>
+          <h3>Vertical Takeoff & Landing</h3>
+          <p>No runway needed. Deploy from rooftop pads, vertiports or urban hubs with precision and efficiency.</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon"><span class="material-icons">battery_charging_full</span></div>
+          <h3>Eco‑Electric Power</h3>
+          <p>Zero-emission propulsion systems, silent operations, and advanced long-range battery modules.</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon"><span class="material-icons">connected_tv</span></div>
+          <h3>Smart Infotainment Hub</h3>
+          <p>Adaptive in-flight entertainment, real-time metrics, connectivity and personalized content.</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon"><span class="material-icons">security</span></div>
+          <h3>Redundant Safety Systems</h3>
+          <p>Multiple backups, real-time diagnostics, and autonomous fallback protocols for maximum safety.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="infotainment">
+    <div class="container">
+      <div class="infotainment">
+        <div class="infotainment-img">
+          <img src="/public/hero.jpg" alt="Infotainment Display">
+        </div>
+        <div class="infotainment-text">
+          <h2>Immersive Infotainment Experience</h2>
+          <p>Passengers enjoy a fully integrated system: streaming, flight metrics, AR window displays, navigation, environment control and more — all controlled with simplicity and elegance.</p>
+          <p>Our UI is tailored for clarity and responsiveness, ensuring quick access to media, destination overview, real-time flight data, and connectivity options during transit.</p>
+          <div class="infotainment-features">
+            <div class="infotainment-feature">
+              <span class="material-icons icon">check_circle</span>
+              <span>High-resolution touch displays</span>
+            </div>
+            <div class="infotainment-feature">
+              <span class="material-icons icon">check_circle</span>
+              <span>Augmented reality windows</span>
+            </div>
+            <div class="infotainment-feature">
+              <span class="material-icons icon">check_circle</span>
+              <span>Voice-controlled environment</span>
+            </div>
+            <div class="infotainment-feature">
+              <span class="material-icons icon">check_circle</span>
+              <span>Real-time flight data visualization</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="fleet" class="fleet">
+    <div class="container">
+      <div class="section-title">
+        <h2>Our Fleet</h2>
+        <p>Designed for various mission profiles from urban commuting to luxury transport</p>
+      </div>
+      <div class="fleet-cards">
+        <div class="fleet-card">
+          <div class="fleet-card-img">
+            <img src="/public/hero.jpg" alt="SkyLink A1">
+          </div>
+          <div class="fleet-card-content">
+            <h3>SkyLink A1</h3>
+            <p>2‑seat urban commuter with 150 km range, tilt‑wing design for efficient forward flight.</p>
+            <div class="fleet-specs">
+              <div class="spec">
+                <div class="spec-value">2</div>
+                <div class="spec-label">Passengers</div>
+              </div>
+              <div class="spec">
+                <div class="spec-value">150 km</div>
+                <div class="spec-label">Range</div>
+              </div>
+              <div class="spec">
+                <div class="spec-value">180 km/h</div>
+                <div class="spec-label">Cruise Speed</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="fleet-card">
+          <div class="fleet-card-img">
+            <img src="/public/hero.jpg" alt="SkyLink B4">
+          </div>
+          <div class="fleet-card-content">
+            <h3>SkyLink B4</h3>
+            <p>4-passenger luxury model with extended range and panoramic views for premium experience.</p>
+            <div class="fleet-specs">
+              <div class="spec">
+                <div class="spec-value">4</div>
+                <div class="spec-label">Passengers</div>
+              </div>
+              <div class="spec">
+                <div class="spec-value">300 km</div>
+                <div class="spec-label">Range</div>
+              </div>
+              <div class="spec">
+                <div class="spec-value">220 km/h</div>
+                <div class="spec-label">Cruise Speed</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="fleet-card">
+          <div class="fleet-card-img">
+            <img src="/public/hero.jpg" alt="SkyLink C6">
+          </div>
+          <div class="fleet-card-content">
+            <h3>SkyLink C6</h3>
+            <p>6-seat executive shuttle with premium amenities for corporate transport and air taxi services.</p>
+            <div class="fleet-specs">
+              <div class="spec">
+                <div class="spec-value">6</div>
+                <div class="spec-label">Passengers</div>
+              </div>
+              <div class="spec">
+                <div class="spec-value">250 km</div>
+                <div class="spec-label">Range</div>
+              </div>
+              <div class="spec">
+                <div class="spec-value">200 km/h</div>
+                <div class="spec-label">Cruise Speed</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="container">
+      <div class="section-title">
+        <h2>Get In Touch</h2>
+        <p>Interested in partnerships, ride bookings or tech integration? Reach out to our team.</p>
+      </div>
+      <div class="contact">
+        <button class="btn-cta">Contact Us</button>
+      </div>
+    </div>
+  </section>
+
+
+
+  <section class="fleet-nav">
+    <div class="container">
+      <div class="fleet-nav-list">
+        <div class="fleet-nav-item active" data-model="a1">SkyLink A1</div>
+        <div class="fleet-nav-item" data-model="b4">SkyLink B4</div>
+        <div class="fleet-nav-item" data-model="c6">SkyLink C6</div>
+        <div class="fleet-nav-item" data-model="compare">Compare Models</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="fleet-details">
+    <!-- SkyLink A1 Model -->
+    <div class="fleet-model active" id="model-a1">
+      <div class="container">
+        <div class="model-header">
+          <h2>SkyLink A1</h2>
+          <p>Urban commuter designed for efficiency and agility in dense city environments</p>
+        </div>
+        
+        <div class="model-content">
+          <div class="model-image">
+            <img src="https://images.unsplash.com/photo-1502134249126-9f3755a50d78?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="SkyLink A1">
+          </div>
+          
+          <div class="model-info">
+            <h3>Urban Air Mobility Redefined</h3>
+            <p>The SkyLink A1 is our flagship urban commuter model, designed specifically for short to medium-range trips within metropolitan areas. With its compact footprint and advanced tilt-wing technology, the A1 can operate from rooftop vertiports with minimal space requirements.</p>
+            
+            <div class="model-specs">
+              <div class="spec-item">
+                <span class="spec-value">2</span>
+                <span class="spec-label">Passengers</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-value">150 km</span>
+                <span class="spec-label">Range</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-value">180 km/h</span>
+                <span class="spec-label">Cruise Speed</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-value">25 min</span>
+                <span class="spec-label">Charge Time</span>
+              </div>
+            </div>
+            
+            <div class="model-features">
+              <h4>Key Features</h4>
+              <ul class="features-list">
+                <li>Tilt-wing design for efficient forward flight</li>
+                <li>Advanced noise reduction technology</li>
+                <li>Automated flight systems with manual override</li>
+                <li>Rapid charging capability</li>
+                <li>All-weather operation certification</li>
+                <li>Integrated safety and collision avoidance</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <div class="tech-specs">
+          <h3>Technical Specifications</h3>
+          <table class="specs-table">
+            <tr>
+              <td>Dimensions (LxWxH)</td>
+              <td>6.2m x 7.8m x 2.5m</td>
+            </tr>
+            <tr>
+              <td>Maximum Takeoff Weight</td>
+              <td>850 kg</td>
+            </tr>
+            <tr>
+              <td>Propulsion System</td>
+              <td>8 electric motors with distributed propulsion</td>
+            </tr>
+            <tr>
+              <td>Battery Capacity</td>
+              <td>120 kWh lithium-polymer</td>
+            </tr>
+            <tr>
+              <td>Noise Level</td>
+              <td>65 dB at 100m (takeoff)</td>
+            </tr>
+            <tr>
+              <td>Certification</td>
+              <td>EASA SC-VTOL, FAA Part 135</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    
+    <!-- SkyLink B4 Model -->
+    <div class="fleet-model" id="model-b4">
+      <div class="container">
+        <div class="model-header">
+          <h2>SkyLink B4</h2>
+          <p>Luxury model offering premium comfort for executive transport and air taxi services</p>
+        </div>
+        
+        <div class="model-content">
+          <div class="model-image">
+            <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="SkyLink B4">
+          </div>
+          
+          <div class="model-info">
+            <h3>Executive Travel Elevated</h3>
+            <p>The SkyLink B4 combines luxury with performance, offering a spacious cabin with panoramic views for up to four passengers. Designed for comfort during longer journeys, the B4 features premium materials, advanced climate control, and a state-of-the-art infotainment system.</p>
+            
+            <div class="model-specs">
+              <div class="spec-item">
+                <span class="spec-value">4</span>
+                <span class="spec-label">Passengers</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-value">300 km</span>
+                <span class="spec-label">Range</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-value">220 km/h</span>
+                <span class="spec-label">Cruise Speed</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-value">35 min</span>
+                <span class="spec-label">Charge Time</span>
+              </div>
+            </div>
+            
+            <div class="model-features">
+              <h4>Key Features</h4>
+              <ul class="features-list">
+                <li>Spacious cabin with premium seating</li>
+                <li>360-degree panoramic windows</li>
+                <li>Advanced noise cancellation system</li>
+                <li>Executive infotainment with connectivity</li>
+                <li>Climate-controlled cabin</li>
+                <li>Enhanced safety with dual redundancy</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <div class="tech-specs">
+          <h3>Technical Specifications</h3>
+          <table class="specs-table">
+            <tr>
+              <td>Dimensions (LxWxH)</td>
+              <td>8.5m x 9.2m x 2.8m</td>
+            </tr>
+            <tr>
+              <td>Maximum Takeoff Weight</td>
+              <td>1,400 kg</td>
+            </tr>
+            <tr>
+              <td>Propulsion System</td>
+              <td>12 electric motors with distributed propulsion</td>
+            </tr>
+            <tr>
+              <td>Battery Capacity</td>
+              <td>240 kWh lithium-polymer</td>
+            </tr>
+            <tr>
+              <td>Noise Level</td>
+              <td>62 dB at 100m (takeoff)</td>
+            </tr>
+            <tr>
+              <td>Certification</td>
+              <td>EASA SC-VTOL, FAA Part 135</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    
+    <!-- SkyLink C6 Model -->
+    <div class="fleet-model" id="model-c6">
+      <div class="container">
+        <div class="model-header">
+          <h2>SkyLink C6</h2>
+          <p>High-capacity shuttle for corporate transport and regional air taxi services</p>
+        </div>
+        
+        <div class="model-content">
+          <div class="model-image">
+            <img src="https://images.unsplash.com/photo-1589254065878-42c9da5a5da2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="SkyLink C6">
+          </div>
+          
+          <div class="model-info">
+            <h3>Capacity Meets Performance</h3>
+            <p>The SkyLink C6 is our high-capacity model designed for corporate shuttle services and regional air taxi operations. With seating for up to six passengers, the C6 offers an optimal balance of range, comfort, and operational efficiency for group transportation needs.</p>
+            
+            <div class="model-specs">
+              <div class="spec-item">
+                <span class="spec-value">6</span>
+                <span class="spec-label">Passengers</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-value">250 km</span>
+                <span class="spec-label">Range</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-value">200 km/h</span>
+                <span class="spec-label">Cruise Speed</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-value">40 min</span>
+                <span class="spec-label">Charge Time</span>
+              </div>
+            </div>
+            
+            <div class="model-features">
+              <h4>Key Features</h4>
+              <ul class="features-list">
+                <li>Configurable seating for up to 6 passengers</li>
+                <li>Enhanced cargo capacity options</li>
+                <li>Rapid boarding with wide access doors</li>
+                <li>Advanced flight management system</li>
+                <li>Redundant systems for maximum safety</li>
+                <li>Modular interior for various mission profiles</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <div class="tech-specs">
+          <h3>Technical Specifications</h3>
+          <table class="specs-table">
+            <tr>
+              <td>Dimensions (LxWxH)</td>
+              <td>9.8m x 10.5m x 3.2m</td>
+            </tr>
+            <tr>
+              <td>Maximum Takeoff Weight</td>
+              <td>2,100 kg</td>
+            </tr>
+            <tr>
+              <td>Propulsion System</td>
+              <td>16 electric motors with distributed propulsion</td>
+            </tr>
+            <tr>
+              <td>Battery Capacity</td>
+              <td>280 kWh lithium-polymer</td>
+            </tr>
+            <tr>
+              <td>Noise Level</td>
+              <td>68 dB at 100m (takeoff)</td>
+            </tr>
+            <tr>
+              <td>Certification</td>
+              <td>EASA SC-VTOL, FAA Part 135</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Comparison Section -->
+    <div class="fleet-model" id="model-compare">
+      <div class="comparison">
+        <div class="container">
+          <h2>Model Comparison</h2>
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th>Specification</th>
+                <th>SkyLink A1</th>
+                <th>SkyLink B4</th>
+                <th>SkyLink C6</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Passenger Capacity</td>
+                <td>2</td>
+                <td>4</td>
+                <td>6</td>
+              </tr>
+              <tr>
+                <td>Range</td>
+                <td>150 km</td>
+                <td>300 km</td>
+                <td>250 km</td>
+              </tr>
+              <tr>
+                <td>Cruise Speed</td>
+                <td>180 km/h</td>
+                <td>220 km/h</td>
+                <td>200 km/h</td>
+              </tr>
+              <tr>
+                <td>Charge Time</td>
+                <td>25 min</td>
+                <td>35 min</td>
+                <td>40 min</td>
+              </tr>
+              <tr>
+                <td>Noise Level</td>
+                <td>65 dB</td>
+                <td>62 dB</td>
+                <td>68 dB</td>
+              </tr>
+              <tr>
+                <td>Best For</td>
+                <td>Urban commuting</td>
+                <td>Executive travel</td>
+                <td>Group transport</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h4>About</h4>
+          <a href="#">Our Mission</a>
+          <a href="#">Team</a>
+          <a href="#">Careers</a>
+          <a href="#">Newsroom</a>
+        </div>
+        <div class="footer-col">
+          <h4>Services</h4>
+          <a href="#">Charter Flights</a>
+          <a href="#">Infotainment Platform</a>
+          <a href="#">Maintenance & Support</a>
+          <a href="#">Training Programs</a>
+        </div>
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <a href="#">Blog</a>
+          <a href="#">White Papers</a>
+          <a href="#">Technical Docs</a>
+          <a href="#">Research & Development</a>
+        </div>
+        <div class="footer-col">
+          <h4>Follow Us</h4>
+          <a href="#">LinkedIn</a>
+          <a href="#">Twitter</a>
+          <a href="#">YouTube</a>
+          <a href="#">Instagram</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        &copy; 2025 SkyLink eVTOL. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+   // Header scroll effect
+window.addEventListener('scroll', function() {
+  const header = document.getElementById('header');
+  if (window.scrollY > 50) {
+    header.classList.add('scrolled');
+  } else {
+    header.classList.remove('scrolled');
+  }
+});
+
+// Mobile menu toggle
+const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+const mainNav = document.getElementById('mainNav');
+
+mobileMenuBtn.addEventListener('click', function() {
+  mainNav.classList.toggle('active');
+});
+
+// Close mobile menu when clicking on a link
+document.querySelectorAll('nav a').forEach(link => {
+  link.addEventListener('click', () => {
+    mainNav.classList.remove('active');
+  });
+});
+
+// Smooth scroll for navigation links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    e.preventDefault();
+
+    const targetId = this.getAttribute('href');
+    if (targetId === '#') return;
+
+    const targetElement = document.querySelector(targetId);
+    if (targetElement) {
+      window.scrollTo({
+        top: targetElement.offsetTop - 80,
+        behavior: 'smooth'
+      });
+    }
+  });
+});
+
+// Fleet navigation functionality
+const fleetNavItems = document.querySelectorAll('.fleet-nav-item');
+const fleetModels = document.querySelectorAll('.fleet-model');
+
+fleetNavItems.forEach(item => {
+  item.addEventListener('click', function() {
+    // Remove active class from all items
+    fleetNavItems.forEach(navItem => {
+      navItem.classList.remove('active');
+    });
+
+    // Add active class to clicked item
+    this.classList.add('active');
+
+    // Hide all models
+    fleetModels.forEach(model => {
+      model.classList.remove('active');
+    });
+
+    // Show selected model
+    const modelId = this.getAttribute('data-model');
+    document.getElementById(`model-${modelId}`).classList.add('active');
+  }); // Fixed line
+});
+
+  </script>
+</body>
+</html>
